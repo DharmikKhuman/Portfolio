@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dharmik Khuman — Performance Marketing & Creative Design</title>
+  <meta name="description" content="Portfolio of Dharmik Khuman: Performance Marketing, Social Campaigns, and Data Analytics.">
+  <meta name="author" content="Dharmik Khuman">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       1. CORE VARIABLES & THEMING
+       ===================================================== */
+    :root {
+      /* Font */
+      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+
+      /* Colors - Dark Mode (Default) */
+      --bg-color: #050b14;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #1a2c4e 0%, #050b14 60%);
+      --text-main: #e6eef6;
+      --text-muted: #94a3b8;
+      
+      /* Accent Colors */
+      --accent-primary: #38bdf8; /* Sky Blue */
+      --accent-secondary: #2dd4bf; /* Teal */
+      --accent-purple: #a78bfa;
+
+      /* Component Styles */
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --card-hover-y: -6px;
+    }
+
+    /* Light Mode Variables (Toggled via [data-theme="light"]) */
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #f8fafc 60%);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(203, 213, 225, 0.6);
+      --glass-shadow: 0 8px 24px rgba(148, 163, 184, 0.15);
+    }
+
+    /* =====================================================
+       2. BASE STYLES
+       ===================================================== */
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed; /* Parallax-like fixed bg */
+      color: var(--text-main);
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.5s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    /* Subtle Grain Overlay for Texture */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    section { padding: 6rem 0; }
+    
+    /* Typography Overrides */
+    h1, h2, h3, h4, h5, .display-4 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+    .text-muted-custom { color: var(--text-muted) !important; font-size: 0.95rem; line-height: 1.6; }
+
+    /* =====================================================
+       3. COMPONENTS & UTILITIES
+       ===================================================== */
+    
+    /* Navbar */
+    .navbar {
+      padding: 1.5rem 0;
+      transition: padding 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(var(--bg-color), 0.8);
+      backdrop-filter: blur(12px);
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-link {
+      color: var(--text-muted) !important;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--accent-primary) !important; }
+
+    /* Buttons */
+    .btn-primary-glow {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border: none;
+      color: #000; /* Contrast for dark mode accents */
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    [data-theme="light"] .btn-primary-glow { color: #fff; }
+    
+    .btn-primary-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+      color: inherit;
+    }
+
+    .btn-outline-custom {
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      border-radius: 50px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .btn-outline-custom:hover {
+      background: var(--glass-border);
+      color: var(--text-main);
+    }
+
+    /* Badges/Chips */
+    .badge-glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 0.5em 1em;
+      font-weight: 500;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* =====================================================
+       4. CARDS & GLASSMORPHISM
+       ===================================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+      height: 100%;
+    }
+
+    /* Hover Effect: Neon Lift */
+    .glass-card:hover {
+      transform: translateY(var(--card-hover-y));
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2), 0 0 20px rgba(56, 189, 248, 0.1);
+    }
+
+    /* Project Images */
+    .project-thumb-container {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      position: relative;
+      aspect-ratio: 16/9;
+    }
+    .project-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .glass-card:hover .project-thumb {
+      transform: scale(1.05);
+    }
+
+    /* Skill Progress Bars */
+    .progress-custom {
+      height: 8px;
+      background: var(--glass-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .progress-bar-gradient {
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      height: 100%; /* FIX: Ensures bar is visible */
+      border-radius: inherit;
+      transition: width 1.5s ease-in-out;
+    }
+
+    /* Profile Image */
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--glass-border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* =====================================================
+       5. ANIMATIONS (Scroll Reveal)
+       ===================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delays */
+    .delay-100 { transition-delay: 0.1s; }
+    .delay-200 { transition-delay: 0.2s; }
+    .delay-300 { transition-delay: 0.3s; }
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-white" href="#">Dharmik<span style="color:var(--accent-primary)">.</span></a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span style="filter: invert(1)">☰</span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-center gap-3">
+          <li class="nav-item"><a class="nav-link" href="#projects">Work</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#achievements">Awards</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item border-start border-secondary ps-3 ms-2">
+            <button id="themeToggle" class="btn btn-sm btn-outline-custom py-1 px-2" aria-label="Toggle Theme">
+              ☀ / ☾
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="d-flex align-items-center" style="min-height: 100vh; padding-top: 80px;">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        
+        <div class="col-lg-7 reveal">
+          <span class="text-uppercase fw-bold tracking-wide" style="color: var(--accent-primary); letter-spacing: 2px; font-size: 0.85rem;">
+            Performance Marketer & Creative
+          </span>
+          <h1 class="display-4 mt-3 mb-4">
+            Data-driven campaigns.<br>
+            <span style="background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+              Creative design that scales.
+            </span>
+          </h1>
+          <p class="text-muted-custom mb-5" style="max-width: 600px; font-size: 1.1rem;">
+            I combine <strong>Google Analytics</strong>, <strong>Meta Ads</strong>, and <strong>High-Conversion Design</strong> to help brands grow. Based in Mumbai, specializing in maximizing ROI through creative strategy.
+          </p>
+          
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#projects" class="btn btn-primary-glow">View My Work</a>
+            <a href="#contact" class="btn btn-outline-custom">Download Resume</a>
+          </div>
+
+          <div class="mt-5 d-flex flex-wrap gap-2">
+            <span class="badge-glass">Canva (Expert)</span> 
+            <span class="badge-glass">Power BI</span> 
+            <span class="badge-glass">Meta Business Suite</span> 
+            <span class="badge-glass">AI Tools</span> 
+          </div>
+        </div>
+
+        <div class="col-lg-5 text-center reveal delay-200">
+          <div class="position-relative d-inline-block">
+             <div style="position: absolute; inset: -20px; background: radial-gradient(circle, var(--accent-primary), transparent 70%); opacity: 0.2; filter: blur(20px); z-index: -1;"></div>
+            <img src="img.png" alt="Dharmik Khuman" class="profile-img">
+          </div>
+          
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <div class="glass-card py-2 px-3 text-start" style="border-radius: 12px; transform: rotate(-2deg);">
+              <div class="fw-bold" style="color: var(--accent-primary)">2020-Present</div> 
+              <div style="font-size: 0.75rem" class="text-muted">Experience</div>
+            </div>
+            <div class="glass-card py-2 px-3 text-start" style="border-radius: 12px; transform: rotate(2deg);">
+              <div class="fw-bold" style="color: var(--accent-secondary)">ROI Focus</div> 
+              <div style="font-size: 0.75rem" class="text-muted">Optimization</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <section id="skills">
+    <div class="container">
+      <div class="row mb-5 reveal">
+        <div class="col-12">
+          <h2 class="mb-2">Technical Expertise</h2>
+          <p class="text-muted-custom">My stack for creating and analyzing performance.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4 reveal delay-100">
+          <div class="glass-card">
+            <h4 class="h5 mb-4 d-flex align-items-center gap-2">
+              <span style="color: var(--accent-purple)">🎨</span> Graphic Design
+            </h4>
+            
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>Canva (Expert)</span> 
+                  <span class="text-muted small">95%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 95%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>AI Design Tools</span> 
+                  <span class="text-muted small">85%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 85%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>Adobe Ps & Ai (Basic)</span> 
+                  <span class="text-muted small">50%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 50%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 reveal delay-200">
+          <div class="glass-card">
+            <h4 class="h5 mb-4 d-flex align-items-center gap-2">
+              <span style="color: var(--accent-primary)">📈</span> Analytics & UI
+            </h4>
+            
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>Meta Business Suite</span> 
+                  <span class="text-muted small">88%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 88%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>Google Analytics & Excel</span> 
+                  <span class="text-muted small">80%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 80%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                  <span>Figma (UI & Layout)</span> 
+                  <span class="text-muted small">70%</span>
+              </div>
+              <div class="progress-custom"><div class="progress-bar-gradient" style="width: 70%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-4 reveal delay-300">
+          <div class="glass-card d-flex flex-column justify-content-center" style="background: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);">
+            <h4 class="h5 mb-3">Education & Background</h4>
+            <p class="text-muted-custom mb-2">
+              <strong>M.Com (Business Management)</strong><br>
+              Lala Lajpat Rai College (2022-2026) 
+            </p>
+            <p class="text-muted-custom mb-4">
+              <strong>Bachelor's in Commerce</strong><br>
+              Lala Lajpat Rai College (2020-2022) 
+            </p>
+            <div>
+              <small class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">Skills Focus</small>
+              <div class="d-flex flex-wrap gap-2 mt-2">
+                <span class="badge-glass">Website/UI UX</span> 
+                <span class="badge-glass">Social Media Visuals</span> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="row mb-5 align-items-end reveal">
+        <div class="col-md-8">
+          <h2 class="mb-2">Selected Work</h2>
+          <p class="text-muted-custom mb-0">Featured projects and startup initiatives.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <a href="#" class="btn btn-sm btn-outline-custom">View All Projects →</a>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        
+        <div class="col-md-4 reveal delay-100">
+          <div class="glass-card p-0 overflow-hidden h-100 d-flex flex-column">
+            <div class="project-thumb-container m-3 mb-0">
+              <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" class="project-thumb" alt="FoundersHub">
+            </div>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
+              <div class="d-flex gap-2 mb-3">
+                <span class="badge-glass" style="font-size: 0.7rem">Founder</span> 
+                <span class="badge-glass" style="font-size: 0.7rem">IIT Patna E-Cell</span> 
+              </div>
+              <h5 class="mb-2">Founders Hub</h5>
+              <p class="text-muted-custom small mb-4">
+                Built a startup platform for digital branding and user acquisition. Developed marketing funnels and growth strategies. 
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal delay-200">
+          <div class="glass-card p-0 overflow-hidden h-100 d-flex flex-column">
+            <div class="project-thumb-container m-3 mb-0">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" class="project-thumb" alt="Research Paper">
+            </div>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
+              <div class="d-flex gap-2 mb-3">
+                <span class="badge-glass" style="font-size: 0.7rem">Research</span>
+                <span class="badge-glass" style="font-size: 0.7rem">Social Media</span>
+              </div>
+              <h5 class="mb-2">Gen-Z Monetization Research</h5>
+              <p class="text-muted-custom small mb-4">
+                Analyzed Instagram Reels & Shorts growth models. Studied engagement metrics to identify high-impact content trends. 
+              </p>
+              <a href="research_paper.pdf" download class="mt-auto text-decoration-none fw-bold" style="color: var(--accent-primary)">Read Paper &nearr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal delay-300">
+          <div class="glass-card p-0 overflow-hidden h-100 d-flex flex-column">
+            <div class="project-thumb-container m-3 mb-0">
+              <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80" class="project-thumb" alt="Social Media Creative">
+            </div>
+            <div class="p-4 flex-grow-1 d-flex flex-column">
+              <div class="d-flex gap-2 mb-3">
+                <span class="badge-glass" style="font-size: 0.7rem">Content</span>
+                <span class="badge-glass" style="font-size: 0.7rem">Canva Expert</span> 
+              </div>
+              <h5 class="mb-2">Visual Content Suite</h5>
+              <p class="text-muted-custom small mb-4">
+                Portfolio of static, video, and motion creatives designed for social media. Includes AI-generated visuals. 
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <div class="container">
+      <div class="row mb-5 reveal">
+        <div class="col-12">
+          <h2 class="mb-2">Certifications & Achievements</h2>
+          <p class="text-muted-custom">Recognized participation in national product management challenges.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4 reveal delay-100">
+          <div class="glass-card d-flex flex-column">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="badge-glass" style="background: rgba(167, 139, 250, 0.2); color: var(--accent-purple); font-size: 1.2rem;">🏆</div>
+              <div>
+                <h5 class="mb-0" style="font-size: 1.1rem;">Prodhive: PM Case Competition</h5>
+                <small class="text-muted">IIT - BHU (The Business Club)</small>
+              </div>
+            </div>
+            <p class="text-muted-custom small mb-0">
+              Certificate of participation in the "B.A.S.H 8.0" product management case competition organized by IIT BHU.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal delay-200">
+          <div class="glass-card d-flex flex-column">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="badge-glass" style="background: rgba(56, 189, 248, 0.2); color: var(--accent-primary); font-size: 1.2rem;">🏅</div>
+              <div>
+                <h5 class="mb-0" style="font-size: 1.1rem;">Product Titans Challenge</h5>
+                <small class="text-muted">Book My Mentor</small>
+              </div>
+            </div>
+            <p class="text-muted-custom small mb-0">
+              National Product Management Challenge participation, demonstrating strategic thinking and product roadmap skills.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal delay-300">
+          <div class="glass-card d-flex flex-column">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="badge-glass" style="background: rgba(45, 212, 191, 0.2); color: var(--accent-secondary); font-size: 1.2rem;">🎓</div>
+              <div>
+                <h5 class="mb-0" style="font-size: 1.1rem;">Website / UI UX</h5>
+                <small class="text-muted">Certification Course</small>
+              </div>
+            </div>
+            <p class="text-muted-custom small mb-0">
+              Specialized training in User Interface and User Experience design principles and web layout strategies.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-bottom: 8rem;">
+    <div class="container reveal">
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="glass-card p-5 text-center position-relative overflow-hidden h-100">
+            <div style="position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 60%; height: 200px; background: var(--accent-primary); filter: blur(100px); opacity: 0.15; pointer-events: none;"></div>
+            
+            <h2 class="display-5 mb-3">Let's grow your brand.</h2>
+            <p class="text-muted-custom mb-5 mx-auto" style="max-width: 500px;">
+              Available for freelance projects and roles.
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+              <a href="mailto:dharmikkhuman01@gmail.com" class="btn btn-primary-glow px-4"> 
+                dharmikkhuman1@gmail.com
+              </a>
+              <a href="tel:7045948858" class="btn btn-outline-custom px-4"> 
+                📞 7045948858
+              </a>
+            </div>
+            <div class="mt-4">
+               <a href="#" class="text-muted small">github.com</a> 
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+           <div class="glass-card h-100 d-flex flex-column justify-content-center">
+              <h4 class="mb-3">Work Experience</h4>
+              
+              <div class="mb-4">
+                 <h5 class="mb-1 text-white">Eviska Infotech</h5> 
+                 <span class="badge-glass mb-2 d-inline-block">2023</span> 
+                 <ul class="text-muted-custom small ps-3">
+                    <li>Executed performance-driven ad campaigns improving conversions & ROI. </li>
+                    <li>Conducted A/B testing on ad creatives (copies, visuals, CTAs). </li>
+                    <li>Monitored funnels and user behavior via Google Analytics. </li>
+                    <li>Prepared weekly performance reports with optimization insights. </li>
+                 </ul>
+              </div>
+
+              <div class="mb-0">
+                 <h5 class="mb-1 text-white">Founders Hub</h5> 
+                 <span class="badge-glass mb-2 d-inline-block">Jan 2026 - Present</span> 
+                 <p class="text-muted-custom small mb-0">
+                    Founder — Leading platform development, marketing funnels, and growth strategy for early-stage startups. 
+                 </p>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center py-4 border-top" style="border-color: var(--glass-border) !important;">
+    <div class="container">
+      <p class="text-muted small mb-0">© <span id="year"></span> Dharmik Khuman. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // 1. Dynamic Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2. Theme Toggle Logic
+    const themeBtn = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    
+    // Check local storage or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlEl.setAttribute('data-theme', savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    // 3. Scroll Reveal Animation (Intersection Observer)
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // Optional: Stop observing once revealed
+          // observer.unobserve(entry.target); 
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 4. Navbar Background on Scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+</body>
+</html>
